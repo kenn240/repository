@@ -121,6 +121,7 @@ public class SkeletonDefenseUniverse implements Universe {
 
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
+		System.out.println("faart");
 		disposeSprites();
 		elapsedTime += (actual_delta_time * 0.001);
 		timeSinceLastSpawn += (actual_delta_time * 0.001);
