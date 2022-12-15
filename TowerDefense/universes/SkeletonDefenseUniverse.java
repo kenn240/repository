@@ -1,11 +1,14 @@
 import java.util.ArrayList;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 
 import java.util.Random;
 
 //2020-10-27
 public class SkeletonDefenseUniverse implements Universe {
-
+	
 	private Background a = null;
 	private boolean complete = false;
 	private boolean teleport = false;
@@ -14,7 +17,7 @@ public class SkeletonDefenseUniverse implements Universe {
 	private String status = "";
 	private ArrayList<Background> backgrounds = null;
 	private double xCenter = 600;
-	private double yCenter = 400;
+	private double yCenter = 350;
 	private int level = 10;
 	private double elapsedTime;
 	private final double RATE = 1;
@@ -22,7 +25,17 @@ public class SkeletonDefenseUniverse implements Universe {
 	private static long health = 100;
 	private static long skeletonsKilled = 0;
 	private static int wave = 1;
-	private boolean cannonSelected;
+	
+	
+	private TowerType towerType;
+	private enum TowerType {
+		CANNON(0), TREBUCHET(1), ARCHER(2);
+		private int value = 0;
+
+		private TowerType(int value) {
+			this.value = value;
+		}
+	};
 	
 	public int map[][] = new int[][] {
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
@@ -39,9 +52,10 @@ public class SkeletonDefenseUniverse implements Universe {
 		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3},
 		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 		{5, 5, 5, 3, 3, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
-		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
-		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
+		
+		
 	};
+	
 	private double timeSinceLastSpawn;
 
 	private final double VELOCITY = 200;
@@ -51,7 +65,8 @@ public class SkeletonDefenseUniverse implements Universe {
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
 
 	public SkeletonDefenseUniverse() {
-
+		
+		
 		a = new CastleBackground();
 		backgrounds = new ArrayList<Background>();
 		ArrayList<DisplayableSprite> barriers = ((CastleBackground) a).getBarriers();
@@ -59,9 +74,7 @@ public class SkeletonDefenseUniverse implements Universe {
 		sprites.addAll(barriers);
 
 	}
-	public int getPointOnMap(int column, int row) {
-		return map[column][row];
-	}
+	
 	public double getScale() {
 		return 1;
 	}
@@ -107,15 +120,20 @@ public class SkeletonDefenseUniverse implements Universe {
 	}
 
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
-
+		
 		disposeSprites();
 		elapsedTime += (actual_delta_time * 0.001);
 		timeSinceLastSpawn += (actual_delta_time * 0.001);
 		double velocityX = 0;
 		double velocityY = 0;
-
-		double xPos = 0;
-		double yPos = 0;
+		
+		if (keyboard.keyDownOnce(67)) { // c key
+			towerType = TowerType.CANNON;
+		}
+		if (keyboard.keyDown(84)) { // t key
+			towerType = TowerType.TREBUCHET;
+		}
+		//System.out.println(towerType);
 
 		if (health <= 0) {
 			complete = true;
@@ -125,42 +143,9 @@ public class SkeletonDefenseUniverse implements Universe {
 			nextWave();
 			addScore(500);
 		}
-
-		if (keyboard.keyDownOnce(32) && score >= 700) { // space bar 
-			xPos = MouseInput.screenX / CastleBackground.TILE_WIDTH;
-			yPos = MouseInput.screenY / CastleBackground.TILE_HEIGHT; // find position on array
-			if (map[(int) yPos][(int) xPos] == 6) {
-				cannonSelected = true;
-				}
-			if (cannonSelected == true) {
-				System.out.println("AAAAAA");
-				if (xPos < 24 && yPos < 16 && keyboard.keyDownOnce(32)) {
-					sprites.add(new CannonSprite(MouseInput.screenX, MouseInput.screenY));
-					
-					addScore(-700);
-					map[(int) yPos][(int) xPos] = 4;
-				}
-				cannonSelected = false;
-			}
-			if (xPos < 24 && yPos < 16) { // if mouse is on the array
-				if (map[(int) yPos][(int) xPos] == 2) {
-					sprites.add(new CannonSprite(MouseInput.screenX, MouseInput.screenY));
-					
-					addScore(-700);
-					map[(int) yPos][(int) xPos] = 4;
-					// places a new cannon over your mouse cursor and marks its spot as 4 on 
-					// the array so that you cant place two cannons over each other
-				}
-				
-			}
-
-		}
 		
-		if (timeSinceLastSpawn >= RATE) {
-			SkeletonSprite e = (new SkeletonSprite(530, 750, wave));
-			sprites.add(e);
-			timeSinceLastSpawn = -1000;
-		}
+		timeSinceLastSpawn = spawnSkeletons(timeSinceLastSpawn);
+		
 		
 
 		for (int i = 0; i < sprites.size(); i++) {
@@ -168,9 +153,39 @@ public class SkeletonDefenseUniverse implements Universe {
 
 			sprite.update(this, null, actual_delta_time);
 		}
-
+		double xPos = MouseInput.screenX / CastleBackground.TILE_WIDTH;;
+		double yPos = MouseInput.screenY / CastleBackground.TILE_HEIGHT; // find position on array;
+		if (keyboard.keyDown(32)) {
+			placeTower(xPos, yPos, towerType);
+		}
+		
+	}
+	public double spawnSkeletons(double timeSinceLastSpawn) {
+		if (timeSinceLastSpawn >= RATE) {
+			SkeletonSprite e1 = (new SkeletonSprite(530, 750, wave));
+			sprites.add(e1);
+			return 0;
+		}
+		else {
+			return timeSinceLastSpawn;
+		}
 	}
 	
+	
+	public void placeTower(double xPos, double yPos, TowerType towerType) {
+		if (towerType == TowerType.CANNON && map[(int) yPos][(int) xPos] == 2) {
+			sprites.add(new CannonSprite(MouseInput.screenX, MouseInput.screenY));
+			addScore(-700);
+			map[(int) yPos][(int) xPos] = 4;
+			
+		}
+		if (towerType == TowerType.TREBUCHET && map[(int) yPos][(int) xPos] == 2) {
+			sprites.add(new Trebuchet(MouseInput.screenX, MouseInput.screenY));
+			addScore(-2000);
+			map[(int) yPos][(int) xPos] = 4;
+			
+		}
+	}
 
 	public String toString() {
 		return this.status;

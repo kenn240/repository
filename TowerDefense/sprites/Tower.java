@@ -21,13 +21,13 @@ public class Tower implements DisplayableSprite {
 	private String projectileImage;
 	
 
-		public Tower(double centerX, double centerY, double reloadTime, double range, String imageName, String projectileImage) {
+		public Tower(double centerX, double centerY, double reloadTime, double range, String imageName) {
 			super();
 			this.centerX = centerX;
 			this.centerY = centerY;
 			this.reloadTime = reloadTime;
 			this.range = range;
-			this.projectileImage = projectileImage;
+			
 			Image image = null;
 			try {
 				image = ImageIO.read(new File(imageName));
@@ -106,34 +106,34 @@ public class Tower implements DisplayableSprite {
 		}
 
 		public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
-			
-			checkProximity(universe);
-
 			timeSinceLastShot += actual_delta_time * 0.01;
+			checkProximity(universe, timeSinceLastShot);
 
-			if (this.checkProximity(universe) == true && timeSinceLastShot >= reloadTime) {
-				shoot(universe);
+			
+
+			
 
 				getImage(findTheta(universe));
-				timeSinceLastShot = 0;
+				
 			}
 			
 
-		}
 		
-		private boolean checkProximity(Universe universe) {
+		
+		private void checkProximity(Universe universe, double timeSinceLastShot) {
 			for (DisplayableSprite sprite : universe.getSprites()) {
 				
 				if (sprite instanceof SkeletonSprite &&
-				// we only want to be checking the sprites that are close to
-				// the cannon, the cannons targeting gets messed up otherwise
+				
 						Math.sqrt
 						(Math.pow(sprite.getCenterX() - this.centerX, 2)
 						+ Math.pow(sprite.getCenterY() - this.centerY, 2)) <= range) {
-				return true;
+					if (timeSinceLastShot >= reloadTime) {
+						shoot(universe, sprite);
+					}
 				}
 			}
-			return false;
+			return;
 			
 		}
 
@@ -142,30 +142,25 @@ public class Tower implements DisplayableSprite {
 		
 		
 
-		public void shoot(Universe universe) {
+		public void shoot(Universe universe, DisplayableSprite sprite) {
+			
 			double x = 0;
 			double y = 0;
 
-			for (DisplayableSprite sprite : universe.getSprites()) {
-				if (sprite instanceof SkeletonSprite && 
-						Math.sqrt
-						(Math.pow(sprite.getCenterX() - this.centerX, 2)
-						+ Math.pow(sprite.getCenterY() - this.centerY, 2)
-						) <= 100) {
+			
+						//double distance = Math.sqrt(Math.pow(sprite.getCenterX() - this.centerX, 2)+ Math.pow(sprite.getCenterY() - this.centerY, 2));
+						
 						x = sprite.getCenterX() - this.centerX;
 						y = sprite.getCenterY() - this.centerY;
 
-				} else {
-
-				}
-			}
+				
 			if (x != 0 && y != 0) {
 				CannonBallSprite bullet = new CannonBallSprite(centerX, centerY, x, y);
 				// create a new cannon ball given the x direction that it should
 				// head and the y direction it should head
 				
 				universe.getSprites().add(bullet);
-				timeSinceLastShot = getReloadTime();
+				timeSinceLastShot = 0;
 			}
 		}
 
@@ -175,7 +170,7 @@ public class Tower implements DisplayableSprite {
 			for (DisplayableSprite sprite : universe.getSprites()) {
 
 				if (sprite instanceof SkeletonSprite && Math.sqrt(Math.pow(sprite.getCenterX() - this.centerX, 2)
-						+ Math.pow(sprite.getCenterY() - this.centerY, 2)) <= 100) {
+						+ Math.pow(sprite.getCenterY() - this.centerY, 2)) <= range) {
 					x = sprite.getCenterX() - this.centerX;
 					y = sprite.getCenterY() - this.centerY;
 

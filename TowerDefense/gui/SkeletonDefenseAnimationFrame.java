@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.Dialog.ModalityType;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.awt.event.MouseMotionAdapter;
 public class SkeletonDefenseAnimationFrame extends JFrame {
 
 	final public static int FRAMES_PER_SECOND = 60;
-	final public static int SCREEN_HEIGHT = 800
+	final public static int SCREEN_HEIGHT = 700
 			;
 	final public static int SCREEN_WIDTH = 1200;
 
@@ -54,6 +55,16 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 	private Background background = null;
 	boolean centreOnPlayer = false;
 	int universeLevel = 0;
+	private TowerType towerType;
+	private enum TowerType {
+		CANNON(0), TREBUCHET(1), ARCHER(2), NONE(3);
+		private int value = 0;
+
+		private TowerType(int value) {
+			this.value = value;
+		}
+	};
+	
 	
 	public SkeletonDefenseAnimationFrame(Animation animation) {
 		super("");
@@ -242,9 +253,49 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 		this.lblTop.setText(String.format("Time: %3f;  Score: %d; Health: %s; Skeletons Killed: %s; Wave: %s",
 				elapsed_time / 1000.0, (SkeletonDefenseUniverse.getScore()), (SkeletonDefenseUniverse.getHealth()),
 				(SkeletonDefenseUniverse.getSkeletonsKilled()), (SkeletonDefenseUniverse.getWave())));
-		this.lblBottom.setText("Press space to place a cannon over your mouse cursor (costs 700)");
+		
+		if (keyboard.keyDownOnce(67))  { // c key
+			System.out.println("ajkcnwjond");
+			towerType = TowerType.CANNON;
+		}
+		if (keyboard.keyDownOnce(84)) { // t key
+			towerType = TowerType.TREBUCHET;
+		}
+		if (keyboard.keyDownOnce(66)) { // b key
+			towerType = TowerType.ARCHER;
+		}
+		if (keyboard.keyDownOnce(32)) { // space key
+			towerType = TowerType.NONE;
+		}
+		
+		if (towerType != null) {
+			switch(towerType) {
+			case CANNON:
+				System.out.println("skwcsd");
+				this.lblBottom.setText("Cannon selected costs 700");
+				break;
+			case TREBUCHET:
+				this.lblBottom.setText("Trebuchet selected costs 2000");
+				break;
+			
+			case ARCHER:
+				this.lblBottom.setText("archer selected costs 2000");
+				break;
+		
+			case NONE: 
+				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, A)");
+				break;
+			
+				
+			}
+		}
+			else {
+				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, A)");
+			}
 		
 	}
+	
+	
 
 	private void updateTime() {
 
@@ -292,7 +343,8 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 		if (keyboard.keyDown(88)) {
 			screenCenterY += 1;
 		}
-
+		
+		
 	}
 
 	class DrawPanel extends JPanel {

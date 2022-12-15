@@ -13,9 +13,9 @@ public class SkeletonSprite implements DisplayableSprite, CollidingSprite {
 	private static final int HEIGHT = 50;
 
 	private static Image image;
-	private boolean directionFound = false;
+	
 	private long elapsedTime = 0;
-
+	private boolean directionFound = false;
 	private double centerX = 0;
 	private double centerY = 0;
 	private double width = 50;
@@ -248,6 +248,7 @@ public class SkeletonSprite implements DisplayableSprite, CollidingSprite {
 			return c;
 		}
 		else {
+			
 			if (direction == Direction.DOWN) {
 				return findCorner(xCord, yCord +1, direction);
 			}
