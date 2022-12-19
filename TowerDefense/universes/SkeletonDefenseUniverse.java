@@ -40,7 +40,7 @@ public class SkeletonDefenseUniverse implements Universe {
 	public int map[][] = new int[][] {
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
 		{5, 6, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 
+		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 7}, 
 		{5, 5, 5, 3, 1, 3, 3, 3, 3, 2, 2, 1, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2}, 
 		{5, 5, 5, 3, 1, 1, 1, 1, 3, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2}, 
 		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2},
@@ -121,7 +121,7 @@ public class SkeletonDefenseUniverse implements Universe {
 
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
-		System.out.println("faart");
+		
 		disposeSprites();
 		elapsedTime += (actual_delta_time * 0.001);
 		timeSinceLastSpawn += (actual_delta_time * 0.001);
@@ -134,7 +134,7 @@ public class SkeletonDefenseUniverse implements Universe {
 		if (keyboard.keyDown(84)) { // t key
 			towerType = TowerType.TREBUCHET;
 		}
-		//System.out.println(towerType);
+		
 
 		if (health <= 0) {
 			complete = true;
@@ -175,6 +175,7 @@ public class SkeletonDefenseUniverse implements Universe {
 	
 	public void placeTower(double xPos, double yPos, TowerType towerType) {
 		if (towerType == TowerType.CANNON && map[(int) yPos][(int) xPos] == 2) {
+			
 			sprites.add(new CannonSprite(MouseInput.screenX, MouseInput.screenY));
 			addScore(-700);
 			map[(int) yPos][(int) xPos] = 4;

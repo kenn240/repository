@@ -255,7 +255,6 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 				(SkeletonDefenseUniverse.getSkeletonsKilled()), (SkeletonDefenseUniverse.getWave())));
 		
 		if (keyboard.keyDownOnce(67))  { // c key
-			System.out.println("ajkcnwjond");
 			towerType = TowerType.CANNON;
 		}
 		if (keyboard.keyDownOnce(84)) { // t key
@@ -271,7 +270,7 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 		if (towerType != null) {
 			switch(towerType) {
 			case CANNON:
-				System.out.println("skwcsd");
+				
 				this.lblBottom.setText("Cannon selected costs 700");
 				break;
 			case TREBUCHET:

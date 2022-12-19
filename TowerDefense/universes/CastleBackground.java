@@ -20,6 +20,7 @@ public class CastleBackground implements Background {
 	private Image greenBarrier;
 	private Image woodBorder;
 	private Image cannonBorder;
+	private Image trebuchetBorder;
 	private int maxCols = 0;
 	private int maxRows = 0; 
 	private double shiftX = 0;
@@ -28,10 +29,10 @@ public class CastleBackground implements Background {
 	public int map[][] = new int[][] {
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
 		{5, 6, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1}, 
+		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 7}, 
 		{5, 5, 5, 3, 1, 3, 3, 3, 3, 2, 2, 1, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2}, 
 		{5, 5, 5, 3, 1, 1, 1, 1, 3, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2}, 
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
+		{5, 8, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
 		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
 		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 1, 2, 1, 1, 1, 2, 2, 2, 2, 2},
 		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2},
@@ -51,6 +52,7 @@ public class CastleBackground implements Background {
 			this.greenBarrier = ImageIO.read(new File("res/waterTile.png"));
 			this.woodBorder = ImageIO.read(new File("res/border.png"));
 			this.cannonBorder = ImageIO.read(new File("res/cannonBorder.png"));
+			this.trebuchetBorder = ImageIO.read(new File("res/trebuchetBorder.png"));
 		}
 		catch (IOException e) {
     		System.out.println(e.toString());
@@ -68,7 +70,7 @@ public class CastleBackground implements Background {
 		else if (map[row][col] == 0) {
 			image = null;
 		}
-		else if (map[row][col] == 1) {
+		else if (map[row][col] == 1 || map[row][col] == 7) {
 			image = path;
 		}
 		else if (map[row][col] == 2) {
@@ -83,6 +85,10 @@ public class CastleBackground implements Background {
 		else if (map[row][col] == 6) {
 			image = cannonBorder;
 		}
+		else if (map[row][col] == 8) {
+			image = trebuchetBorder;
+		}
+		
 		int x = (col * TILE_WIDTH);
 		int y = (row * TILE_HEIGHT);
 		

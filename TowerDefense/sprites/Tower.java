@@ -28,7 +28,7 @@ public class Tower implements DisplayableSprite {
 			this.reloadTime = reloadTime;
 			this.range = range;
 			
-			Image image = null;
+			
 			try {
 				image = ImageIO.read(new File(imageName));
 			} catch (IOException e) {
@@ -38,9 +38,11 @@ public class Tower implements DisplayableSprite {
 				for (int i = 0; i < 360; i++) {
 					rotatedImages[i] = ImageRotator.rotate(image, i);
 				}
+				
 				this.height = image.getHeight(null);
 				this.width = image.getWidth(null);
 			}
+			
 			
 		}
 
@@ -48,7 +50,7 @@ public class Tower implements DisplayableSprite {
 
 		public Image getImage() {
 			try {
-				image = rotatedImages[Math.abs((int) currentAngle)];
+				Tower.image = rotatedImages[Math.abs((int) currentAngle)];
 			} catch (ArrayIndexOutOfBoundsException e) {
 				System.out.println(e);
 			}
@@ -106,21 +108,22 @@ public class Tower implements DisplayableSprite {
 		}
 
 		public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+			
+			
+
 			timeSinceLastShot += actual_delta_time * 0.01;
-			checkProximity(universe, timeSinceLastShot);
 
-			
+			if (this.checkProximity(universe) == true && timeSinceLastShot >= reloadTime) {
+				shoot(universe);
 
-			
-
-				getImage(findTheta(universe));
-				
+				getImage();
+				timeSinceLastShot = 0;
 			}
 			
 
+		}
 		
-		
-		private void checkProximity(Universe universe, double timeSinceLastShot) {
+		private boolean checkProximity(Universe universe) {
 			for (DisplayableSprite sprite : universe.getSprites()) {
 				
 				if (sprite instanceof SkeletonSprite &&
@@ -128,12 +131,10 @@ public class Tower implements DisplayableSprite {
 						Math.sqrt
 						(Math.pow(sprite.getCenterX() - this.centerX, 2)
 						+ Math.pow(sprite.getCenterY() - this.centerY, 2)) <= range) {
-					if (timeSinceLastShot >= reloadTime) {
-						shoot(universe, sprite);
-					}
+				return true;
 				}
 			}
-			return;
+			return false;
 			
 		}
 
@@ -142,28 +143,33 @@ public class Tower implements DisplayableSprite {
 		
 		
 
-		public void shoot(Universe universe, DisplayableSprite sprite) {
-			
+		public void shoot(Universe universe) {
 			double x = 0;
 			double y = 0;
 
-			
-						//double distance = Math.sqrt(Math.pow(sprite.getCenterX() - this.centerX, 2)+ Math.pow(sprite.getCenterY() - this.centerY, 2));
-						
+			for (DisplayableSprite sprite : universe.getSprites()) {
+				if (sprite instanceof SkeletonSprite && 
+						Math.sqrt
+						(Math.pow(sprite.getCenterX() - this.centerX, 2)
+						+ Math.pow(sprite.getCenterY() - this.centerY, 2)
+						) <= range) {
 						x = sprite.getCenterX() - this.centerX;
 						y = sprite.getCenterY() - this.centerY;
 
-				
+				} else {
+
+				}
+			}
 			if (x != 0 && y != 0) {
 				CannonBallSprite bullet = new CannonBallSprite(centerX, centerY, x, y);
 				// create a new cannon ball given the x direction that it should
 				// head and the y direction it should head
 				
 				universe.getSprites().add(bullet);
-				timeSinceLastShot = 0;
+				timeSinceLastShot = getReloadTime();
 			}
 		}
-
+		/*
 		public int findTheta(Universe universe) {
 			double x = 0;
 			double y = 0;
@@ -196,7 +202,7 @@ public class Tower implements DisplayableSprite {
 
 			return (int) (currentAngle);
 		}
-
+	*/
 		public double getReloadTime() {
 			return reloadTime;
 		}
@@ -205,6 +211,9 @@ public class Tower implements DisplayableSprite {
 			this.reloadTime = reloadTime;
 		}
 
+
+		
+		
 
 
 		

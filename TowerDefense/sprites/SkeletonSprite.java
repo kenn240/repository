@@ -25,7 +25,7 @@ public class SkeletonSprite implements DisplayableSprite, CollidingSprite {
 	public int map[][] = new int[][] {
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
 		{5, 6, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1}, 
+		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 7}, 
 		{5, 5, 5, 3, 1, 3, 3, 3, 3, 2, 2, 1, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2}, 
 		{5, 5, 5, 3, 1, 1, 1, 1, 3, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2}, 
 		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
@@ -37,6 +37,7 @@ public class SkeletonSprite implements DisplayableSprite, CollidingSprite {
 		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 2, 3},
 		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 		{5, 5, 5, 3, 3, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
+		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 };
@@ -152,7 +153,10 @@ public class SkeletonSprite implements DisplayableSprite, CollidingSprite {
 		
 		int xPos = (int) Math.round((this.centerX -30)/ CastleBackground.TILE_WIDTH) ;
 		int yPos = (int) Math.round(this.centerY / CastleBackground.TILE_HEIGHT);
-		
+		if (map[yPos][xPos] == 7) {
+			this.dispose = true;
+			SkeletonDefenseUniverse.addHealth(-1);
+		}
 		
 		Coordonite corner = (findCorner(xPos, yPos, direction));
 		int cornerY = corner.getyDirection();
@@ -242,7 +246,7 @@ public class SkeletonSprite implements DisplayableSprite, CollidingSprite {
 	public Coordonite findCorner(int xCord, int yCord, Direction direction) {
 		// depending on which direction we go, check all the tiles in front of where the skeleton is going until the tile is no longer type path
 		if (xCord < 24 && yCord < 16) {
-			if (map[yCord][xCord] != 1) {
+			if (map[yCord][xCord] != 1 && map[yCord][xCord] != 7) {
 		
 			Coordonite c = new Coordonite(xCord, yCord);
 			return c;
