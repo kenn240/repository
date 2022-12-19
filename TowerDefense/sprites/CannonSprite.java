@@ -34,6 +34,7 @@ public class CannonSprite extends Tower {
 	}
 	
 	public Image getImage() {
+	
 		try {
 			image = rotatedImages[Math.abs((int) currentAngle)];
 		} catch (ArrayIndexOutOfBoundsException e) {

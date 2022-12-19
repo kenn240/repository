@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 
 public class Tower implements DisplayableSprite {
 	
-	private static Image image;
+	private Image image;
 	private double centerX;
 	private double centerY;
 	private double width;
@@ -37,6 +37,7 @@ public class Tower implements DisplayableSprite {
 			if (image != null) {
 				for (int i = 0; i < 360; i++) {
 					rotatedImages[i] = ImageRotator.rotate(image, i);
+					
 				}
 				
 				this.height = image.getHeight(null);
@@ -47,13 +48,15 @@ public class Tower implements DisplayableSprite {
 		}
 
 		
-
+		
 		public Image getImage() {
+			/*
 			try {
 				Tower.image = rotatedImages[Math.abs((int) currentAngle)];
 			} catch (ArrayIndexOutOfBoundsException e) {
 				System.out.println(e);
 			}
+			*/
 			return image;
 		}
 
@@ -115,8 +118,8 @@ public class Tower implements DisplayableSprite {
 
 			if (this.checkProximity(universe) == true && timeSinceLastShot >= reloadTime) {
 				shoot(universe);
-
-				getImage();
+				this.image = getImage(findTheta(universe));
+				
 				timeSinceLastShot = 0;
 			}
 			
@@ -169,7 +172,7 @@ public class Tower implements DisplayableSprite {
 				timeSinceLastShot = getReloadTime();
 			}
 		}
-		/*
+		
 		public int findTheta(Universe universe) {
 			double x = 0;
 			double y = 0;
@@ -202,7 +205,7 @@ public class Tower implements DisplayableSprite {
 
 			return (int) (currentAngle);
 		}
-	*/
+	
 		public double getReloadTime() {
 			return reloadTime;
 		}
