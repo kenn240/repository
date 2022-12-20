@@ -6,8 +6,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class CannonSprite extends Tower {
-	private static Image image;
-	private static Image[] rotatedImages = new Image[360];
+	private Image image;
+	private Image[] rotatedImages = new Image[360];
 	private double width;
 	private double height;
 	private double currentAngle = 0;
@@ -32,7 +32,7 @@ public class CannonSprite extends Tower {
 			this.width = image.getWidth(null);
 		}
 	}
-	
+	/*
 	public Image getImage() {
 	
 		try {
@@ -80,5 +80,5 @@ public class CannonSprite extends Tower {
 		return (int) (currentAngle);
 	}
 
-	
+	*/
 }

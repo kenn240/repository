@@ -12,7 +12,7 @@ public class Tower implements DisplayableSprite {
 	private double width;
 	private double height;
 	private boolean dispose = false;
-	private static Image[] rotatedImages = new Image[360];
+	private Image[] rotatedImages = new Image[360];
 	private double currentAngle = 0;
 	private double timeSinceLastShot;
 	private boolean inProximity;

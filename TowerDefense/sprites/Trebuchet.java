@@ -6,8 +6,8 @@ import javax.imageio.ImageIO;
 
 public class Trebuchet extends Tower{
 	
-	private static Image image;
-	private static Image[] rotatedImages = new Image[360];
+	private Image image;
+	private Image[] rotatedImages = new Image[360];
 	private double width;
 	private double height;
 	private double currentAngle = 0;
@@ -33,26 +33,6 @@ public class Trebuchet extends Tower{
 		}
 		
 	}
-	
-	
-	public Image getImage() {
-		
-		try {
-			image = rotatedImages[Math.abs((int) currentAngle)];
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println(e);
-		}
-		return image;
-		
-		
-	}
-	
-	
-	public Image getImage(int angle) {
-		
-		return rotatedImages[angle];
-	}
-	
 	
 	
 	
