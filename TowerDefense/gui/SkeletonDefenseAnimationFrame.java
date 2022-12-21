@@ -331,15 +331,15 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 		}
 
 		if (keyboard.keyDown(65)) {
-			screenCenterX -= 1;
+			screenCenterX += 1;
 		}
 		if (keyboard.keyDown(68)) {
-			screenCenterX += 1;
+			screenCenterX -= 1;
 		}
 		if (keyboard.keyDown(83)) {
 			screenCenterY -= 1;
 		}
-		if (keyboard.keyDown(88)) {
+		if (keyboard.keyDown(87)) {
 			screenCenterY += 1;
 		}
 		
