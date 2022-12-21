@@ -282,14 +282,14 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 				break;
 		
 			case NONE: 
-				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, A)");
+				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, B)");
 				break;
 			
 				
 			}
 		}
 			else {
-				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, A)");
+				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, B)");
 			}
 		
 	}
