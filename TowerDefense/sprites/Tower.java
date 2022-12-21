@@ -21,6 +21,7 @@ public class Tower implements DisplayableSprite {
 	private String projectileName;
 	private Image projectileImage;
 	private int damage;
+	private DisplayableSprite targettedSprite;
 
 		public Tower(double centerX, double centerY, double reloadTime, double range, int damage, String imageName, String projectileName) {
 			super();
@@ -144,12 +145,13 @@ public class Tower implements DisplayableSprite {
 				return true;
 				}
 			
-		
-				return false;
+		return false;
 			
 		}
 		
-
+		public void shoot(DisplayableSprite TargettedSprite) {
+			
+		}
 		
 		
 

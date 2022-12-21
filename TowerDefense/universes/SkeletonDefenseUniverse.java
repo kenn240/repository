@@ -41,19 +41,20 @@ public class SkeletonDefenseUniverse implements Universe {
 	public int map[][] = new int[][] {
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
 		{5, 6, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 7}, 
-		{5, 5, 5, 3, 1, 3, 3, 3, 3, 2, 2, 1, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2}, 
-		{5, 5, 5, 3, 1, 1, 1, 1, 3, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2}, 
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2},
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2},
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 1, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1, 2},
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 1, 1, 2, 1, 2, 2, 1, 2, 2, 2, 1, 2},
-		{5, 5, 5, 3, 3, 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, 2, 2, 2, 1, 2},
-		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, 2, 2, 2, 1, 3},
-		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3},
+		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 7}, 
+		{5, 5, 5, 3, 1, 3, 3, 3, 3, 2, 2, 1, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2}, 
+		{5, 5, 5, 3, 1, 1, 1, 1, 3, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2}, 
+		{5, 8, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
+		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
+		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 1, 2, 1, 1, 1, 2, 2, 2, 2, 2},
+		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2},
+		{5, 5, 5, 3, 3, 1, 1, 1, 2, 2, 2, 2, 2, 1, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2},
+		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 3},
+		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 2, 3},
 		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 		{5, 5, 5, 3, 3, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
-		
+		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
+		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 		
 	};
 	
@@ -193,24 +194,27 @@ public class SkeletonDefenseUniverse implements Universe {
 	
 	
 	public void placeTower(double xPos, double yPos, TowerType towerType) {
-		if (towerType == TowerType.CANNON && map[(int) yPos][(int) xPos] == 2) {
+		if  (map[(int) yPos][(int) xPos] == 2) {
+		
+			if (towerType == TowerType.CANNON) {
 			
-			sprites.add(new CannonSprite(MouseInput.screenX, MouseInput.screenY));
-			addScore(-700);
-			map[(int) yPos][(int) xPos] = 4;
+				sprites.add(new CannonSprite(MouseInput.screenX, MouseInput.screenY));
+				addScore(-700);
+				map[(int) yPos][(int) xPos] = 4;
 			
-		}
-		if (towerType == TowerType.TREBUCHET && map[(int) yPos][(int) xPos] == 2) {
-			sprites.add(new Trebuchet(MouseInput.screenX, MouseInput.screenY));
-			addScore(-2000);
-			map[(int) yPos][(int) xPos] = 4;
+			}
+			if (towerType == TowerType.TREBUCHET) {
+				sprites.add(new Trebuchet(MouseInput.screenX, MouseInput.screenY));
+				addScore(-2000);
+				map[(int) yPos][(int) xPos] = 4;
 			
-		}
-		if (towerType == TowerType.ARCHER && map[(int) yPos][(int) xPos] == 2) {
-			sprites.add(new CrossBow(MouseInput.screenX, MouseInput.screenY));
-			addScore(-1500);
-			map[(int) yPos][(int) xPos] = 4;
+			}
+			if (towerType == TowerType.ARCHER) {
+				sprites.add(new CrossBow(MouseInput.screenX, MouseInput.screenY));
+				addScore(-1500);
+				map[(int) yPos][(int) xPos] = 4;
 			
+			}
 		}
 	}
 
