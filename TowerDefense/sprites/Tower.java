@@ -18,16 +18,19 @@ public class Tower implements DisplayableSprite {
 	private boolean inProximity;
 	private double reloadTime;
 	private double range;
-	private String projectileImage;
-	
+	private String projectileName;
+	private Image projectileImage;
+	private int damage;
 
-		public Tower(double centerX, double centerY, double reloadTime, double range, String imageName) {
+		public Tower(double centerX, double centerY, double reloadTime, double range, int damage, String imageName, String projectileName) {
 			super();
 			this.centerX = centerX;
 			this.centerY = centerY;
 			this.reloadTime = reloadTime;
 			this.range = range;
-			
+			this.projectileName = projectileName;
+			this.projectileImage = projectileImage;
+			this.damage = damage;
 			
 			try {
 				image = ImageIO.read(new File(imageName));
@@ -50,13 +53,7 @@ public class Tower implements DisplayableSprite {
 		
 		
 		public Image getImage() {
-			/*
-			try {
-				Tower.image = rotatedImages[Math.abs((int) currentAngle)];
-			} catch (ArrayIndexOutOfBoundsException e) {
-				System.out.println(e);
-			}
-			*/
+			
 			return image;
 		}
 
@@ -164,7 +161,7 @@ public class Tower implements DisplayableSprite {
 				}
 			}
 			if (x != 0 && y != 0) {
-				CannonBallSprite bullet = new CannonBallSprite(centerX, centerY, x, y);
+				Projectile bullet = new Projectile(centerX, centerY, x, y, projectileName, damage);
 				// create a new cannon ball given the x direction that it should
 				// head and the y direction it should head
 				

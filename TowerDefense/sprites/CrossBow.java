@@ -11,18 +11,15 @@ public class CrossBow extends Tower {
 	private static Image[] rotatedImages = new Image[360];
 	private double width;
 	private double height;
-	private double currentAngle = 0;
-	private double centerX;
-	private double centerY;
-	private int range = 100;
+	
 	
 
-	public CrossBow(double centerX, double centerY, double reloadTime, double range, String imageName) {
-		super(centerX, centerY, .5, 250, "res/crossbow.png"); // each increment of 50 is 1 tile
+	public CrossBow(double centerX, double centerY) {
+		super(centerX, centerY, .5, 250, 1,  "res/crossbow.png", "res/bullet.png"); // each increment of 50 is 1 tile
 		
 
 		try {
-			image = ImageIO.read(new File("res/trebuchet.png"));
+			image = ImageIO.read(new File("res/crossbow.png"));
 		} catch (IOException e) {
 			System.out.println(e.toString());
 		}
@@ -37,22 +34,5 @@ public class CrossBow extends Tower {
 	}
 
 
-	public Image getImage() {
-		
-		try {
-			image = rotatedImages[Math.abs((int) currentAngle)];
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println(e);
-		}
-		return image;
-		
-		
-	}
-	
-	
-	public Image getImage(int angle) {
-		
-		return rotatedImages[angle];
-	}
 
 }

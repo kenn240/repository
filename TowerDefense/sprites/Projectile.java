@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 
 public class Projectile implements DisplayableSprite, MovableSprite, CollidingSprite {
 
-	private static Image image1;
+	private Image image1;
 	
 	private double centerX = 0;
 	private double centerY = 0;
@@ -20,25 +20,25 @@ public class Projectile implements DisplayableSprite, MovableSprite, CollidingSp
 	private double dX, dY, elapsedTime;
 	private double velocityX;
 	private double velocityY;
+	private int damage;
 
-	public Projectile(double centerX, double centerY, double dX, double dY, String imageName) {
+	public Projectile(double centerX, double centerY, double dX, double dY, String imageName, int damage) {
 		super();
 		this.centerX = centerX;
 		this.centerY = centerY;
 		this.dX = dX;
 		this.dY = dY;
-
-		if (image1 == null) {
+		this.damage = damage;
+		
 			try {
-
 				image1 = ImageIO.read(new File(imageName));
-
-			
-			} catch (IOException e) {
+				System.out.println(imageName);
+			} 
+			catch (IOException e) {
 				System.out.println(e.toString());
 			}
 
-		}
+		
 	}
 
 	public Image getImage() {
@@ -104,11 +104,11 @@ public class Projectile implements DisplayableSprite, MovableSprite, CollidingSp
 		
 
 		// calculate new position based on velocity and time elapsed
-		double deltaX = actual_delta_time * 0.001 * velocityX;
+		//double deltaX = actual_delta_time * 0.001 * velocityX;
 
 		this.centerX += dX * 0.5;
 
-		double deltaY = actual_delta_time * 0.001 * velocityY;
+		//double deltaY = actual_delta_time * 0.001 * velocityY;
 
 		this.centerY += dY * 0.5;
 
@@ -146,7 +146,7 @@ public class Projectile implements DisplayableSprite, MovableSprite, CollidingSp
 
 			if (sprite instanceof SkeletonSprite) {
 				if (CollisionDetection.pixelBasedOverlaps(this, sprite)) {
-				
+					((SkeletonSprite) sprite).removeHealth(damage);
 					colliding = true;
 					
 					

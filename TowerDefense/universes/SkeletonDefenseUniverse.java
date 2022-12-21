@@ -134,7 +134,9 @@ public class SkeletonDefenseUniverse implements Universe {
 		if (keyboard.keyDown(84)) { // t key
 			towerType = TowerType.TREBUCHET;
 		}
-		
+		if (keyboard.keyDown(66)) { // b key
+			towerType = TowerType.ARCHER;
+		}
 
 		if (health <= 0) {
 			complete = true;
@@ -163,7 +165,7 @@ public class SkeletonDefenseUniverse implements Universe {
 	}
 	public double spawnSkeletons(double timeSinceLastSpawn) {
 		if (timeSinceLastSpawn >= RATE) {
-			SkeletonSprite e1 = (new SkeletonSprite(530, 750, wave));
+			Enemy e1 = (new SkeletonSprite(530, 750, wave));
 			sprites.add(e1);
 			return 0;
 		}
@@ -184,6 +186,12 @@ public class SkeletonDefenseUniverse implements Universe {
 		if (towerType == TowerType.TREBUCHET && map[(int) yPos][(int) xPos] == 2) {
 			sprites.add(new Trebuchet(MouseInput.screenX, MouseInput.screenY));
 			addScore(-2000);
+			map[(int) yPos][(int) xPos] = 4;
+			
+		}
+		if (towerType == TowerType.ARCHER && map[(int) yPos][(int) xPos] == 2) {
+			sprites.add(new CrossBow(MouseInput.screenX, MouseInput.screenY));
+			addScore(-1500);
 			map[(int) yPos][(int) xPos] = 4;
 			
 		}

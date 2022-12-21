@@ -136,17 +136,15 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 		elapsedTime += actual_delta_time;
 		
 		
-		if (checkCollisionWithCannonBall(universe)) {
-
-			skeletonHealth--;
+		
 			if (skeletonHealth <= 0) {
 				this.dispose = true;
 
 				SkeletonDefenseUniverse.addScore(100);
 				SkeletonDefenseUniverse.skeletonKilled();
+			
 			}
-		}
-
+		
 	
 		
 
@@ -279,6 +277,9 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 		
 		return 0;
 	}
+	public void removeHealth(int hp) {
+		skeletonHealth -= hp;
+	}
 
 	private boolean checkCollisionWithCannonBall(Universe universe) {
 
@@ -287,7 +288,7 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 
 			DisplayableSprite sprite = universe.getSprites().get(i);
 
-			if (sprite instanceof CannonBallSprite) {
+			if (sprite instanceof Projectile) {
 				if (CollisionDetection.pixelBasedOverlaps(this, sprite)) {
 					sprite.setDispose(true);
 					// remove the cannon ball if its colliding

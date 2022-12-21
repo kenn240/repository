@@ -10,14 +10,10 @@ public class CannonSprite extends Tower {
 	private Image[] rotatedImages = new Image[360];
 	private double width;
 	private double height;
-	private double currentAngle = 0;
-	private double centerX;
-	private double centerY;
-	private int range = 100;
-
+	
 	public CannonSprite(double centerX, double centerY) {
 
-		super(centerX, centerY, 3, 100, "res/cannonImage.png");
+		super(centerX, centerY, 3, 100, 1, "res/cannonImage.png", "res/bullet.png");
 		
 		try {
 			image = ImageIO.read(new File("res/cannonImage.png"));
