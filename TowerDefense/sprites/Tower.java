@@ -126,18 +126,28 @@ public class Tower implements DisplayableSprite {
 		private boolean checkProximity(Universe universe) {
 			for (DisplayableSprite sprite : universe.getSprites()) {
 				
-				if (sprite instanceof SkeletonSprite &&
-				
-						Math.sqrt
-						(Math.pow(sprite.getCenterX() - this.centerX, 2)
-						+ Math.pow(sprite.getCenterY() - this.centerY, 2)) <= range) {
+				if ((sprite instanceof Enemy) && checkProximity(sprite)) {
 				return true;
 				}
 			}
 			return false;
 			
 		}
-
+		private boolean checkProximity(DisplayableSprite sprite) {
+			
+				if ((sprite instanceof Enemy) &&
+				
+						Math.sqrt
+						(Math.pow(sprite.getCenterX() - this.centerX, 2)
+						+ Math.pow(sprite.getCenterY() - this.centerY, 2)) 
+						<= range) {
+				return true;
+				}
+			
+		
+				return false;
+			
+		}
 		
 
 		
@@ -148,17 +158,12 @@ public class Tower implements DisplayableSprite {
 			double y = 0;
 
 			for (DisplayableSprite sprite : universe.getSprites()) {
-				if (sprite instanceof SkeletonSprite && 
-						Math.sqrt
-						(Math.pow(sprite.getCenterX() - this.centerX, 2)
-						+ Math.pow(sprite.getCenterY() - this.centerY, 2)
-						) <= range) {
+				if ((sprite instanceof Enemy) && checkProximity(sprite)) {
 						x = sprite.getCenterX() - this.centerX;
 						y = sprite.getCenterY() - this.centerY;
 
-				} else {
-
-				}
+				} 
+				
 			}
 			if (x != 0 && y != 0) {
 				Projectile bullet = new Projectile(centerX, centerY, x, y, projectileName, damage);
@@ -175,8 +180,7 @@ public class Tower implements DisplayableSprite {
 			double y = 0;
 			for (DisplayableSprite sprite : universe.getSprites()) {
 
-				if (sprite instanceof SkeletonSprite && Math.sqrt(Math.pow(sprite.getCenterX() - this.centerX, 2)
-						+ Math.pow(sprite.getCenterY() - this.centerY, 2)) <= range) {
+				if (sprite instanceof Enemy && checkProximity(sprite)) {
 					x = sprite.getCenterX() - this.centerX;
 					y = sprite.getCenterY() - this.centerY;
 

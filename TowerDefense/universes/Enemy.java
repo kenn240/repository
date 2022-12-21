@@ -12,8 +12,9 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 	private static final int WIDTH = 50;
 	private static final int HEIGHT = 50;
 
-	private static Image image;
+	private  Image image;
 	
+	private String imageName;
 	private long elapsedTime = 0;
 	private boolean directionFound = false;
 	private double centerX = 0;
@@ -21,7 +22,7 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 	private double width = 50;
 	private double height = 50;
 	private boolean dispose = false;
-	private int skeletonHealth;
+	private int enemyHealth;
 	public int map[][] = new int[][] {
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
 		{5, 6, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
@@ -58,18 +59,19 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 		}
 	};
 
-	public Enemy(double centerX, double centerY, int health, double velocity) {
+	public Enemy(double centerX, double centerY, int health, double velocity, String imageName) {
 
 		this.centerX = centerX;
 		this.centerY = centerY;
-		this.skeletonHealth = health;
+		this.enemyHealth = health;
 		this.width = WIDTH;
 		this.height = HEIGHT;
+		this.imageName = imageName;
 
 		if (image == null) {
 			try {
 
-				image = ImageIO.read(new File("res/skeleton.png"));
+				image = ImageIO.read(new File(imageName));
 			}
 
 			catch (IOException e) {
@@ -130,19 +132,23 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 	public void setDispose(boolean dispose) {
 		this.dispose = dispose;
 	}
-
+	
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 
 		elapsedTime += actual_delta_time;
-		
-		
-		
-			if (skeletonHealth <= 0) {
-				this.dispose = true;
-
-				SkeletonDefenseUniverse.addScore(100);
-				SkeletonDefenseUniverse.skeletonKilled();
 			
+			
+			
+			if (enemyHealth <= 0) {
+				this.dispose = true;
+				if (this instanceof WizardSprite) {
+					SkeletonDefenseUniverse.addScore(1000);
+					SkeletonDefenseUniverse.skeletonKilled();
+				}
+				if (this instanceof SkeletonSprite) {
+					SkeletonDefenseUniverse.addScore(100);
+					SkeletonDefenseUniverse.skeletonKilled();
+				}
 			}
 		
 	
@@ -153,7 +159,7 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 		int yPos = (int) Math.round(this.centerY / CastleBackground.TILE_HEIGHT);
 		if (map[yPos][xPos] == 7) {
 			this.dispose = true;
-			SkeletonDefenseUniverse.addHealth(-1);
+			SkeletonDefenseUniverse.addHealth(enemyHealth);
 		}
 		
 		Coordonite corner = (findCorner(xPos, yPos, direction));
@@ -278,7 +284,7 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 		return 0;
 	}
 	public void removeHealth(int hp) {
-		skeletonHealth -= hp;
+		enemyHealth -= hp;
 	}
 
 	private boolean checkCollisionWithCannonBall(Universe universe) {

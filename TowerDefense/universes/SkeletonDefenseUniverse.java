@@ -20,7 +20,8 @@ public class SkeletonDefenseUniverse implements Universe {
 	private double yCenter = 350;
 	private int level = 10;
 	private double elapsedTime;
-	private final double RATE = 1;
+	private final double SRATE = 1;
+	private final double WRATE = 2.5;
 	private static long score = 1000;
 	private static long health = 100;
 	private static long skeletonsKilled = 0;
@@ -56,7 +57,8 @@ public class SkeletonDefenseUniverse implements Universe {
 		
 	};
 	
-	private double timeSinceLastSpawn;
+	private double timeSinceLastSkeletonSpawn;
+	private double timeSinceLastWizardSpawn;
 
 	private final double VELOCITY = 200;
 
@@ -124,7 +126,9 @@ public class SkeletonDefenseUniverse implements Universe {
 		
 		disposeSprites();
 		elapsedTime += (actual_delta_time * 0.001);
-		timeSinceLastSpawn += (actual_delta_time * 0.001);
+		timeSinceLastSkeletonSpawn += (actual_delta_time * 0.001);
+		timeSinceLastWizardSpawn += (actual_delta_time * 0.001);
+		
 		double velocityX = 0;
 		double velocityY = 0;
 		
@@ -142,13 +146,20 @@ public class SkeletonDefenseUniverse implements Universe {
 			complete = true;
 		}
 
-		if (skeletonsKilled >= 5 * wave && skeletonsKilled % 5 != 0) {
+		if (skeletonsKilled >= 2 * wave && skeletonsKilled % 2 != 0) {
 			nextWave();
 			addScore(500);
 		}
+		System.out.println(timeSinceLastSkeletonSpawn);
 		
-		timeSinceLastSpawn = spawnSkeletons(timeSinceLastSpawn);
-		
+		if (timeSinceLastSkeletonSpawn >= SRATE) {
+			spawnSkeletons(timeSinceLastSkeletonSpawn, 0);
+			timeSinceLastSkeletonSpawn = 0;
+		}
+		if (timeSinceLastWizardSpawn >= WRATE) {
+			spawnSkeletons(0, timeSinceLastWizardSpawn);
+			timeSinceLastWizardSpawn = 0;
+		}
 		
 
 		for (int i = 0; i < sprites.size(); i++) {
@@ -163,15 +174,21 @@ public class SkeletonDefenseUniverse implements Universe {
 		}
 		
 	}
-	public double spawnSkeletons(double timeSinceLastSpawn) {
-		if (timeSinceLastSpawn >= RATE) {
+	public void spawnSkeletons(double timeSinceLastSkeletonSpawn, double timeSinceLastWizardSpawn) {
+		if (timeSinceLastSkeletonSpawn >= SRATE) {
 			Enemy e1 = (new SkeletonSprite(530, 750, wave));
 			sprites.add(e1);
-			return 0;
+			timeSinceLastSkeletonSpawn = 0;
+			
 		}
-		else {
-			return timeSinceLastSpawn;
+		if (wave >= 10 && timeSinceLastWizardSpawn >= WRATE) {
+			Enemy e2 = (new WizardSprite(530, 750, 3 * wave));
+			sprites.add(e2);
+			timeSinceLastWizardSpawn = 0;
 		}
+		
+			
+		
 	}
 	
 	

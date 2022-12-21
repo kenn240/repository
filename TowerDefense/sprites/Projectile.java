@@ -144,9 +144,9 @@ public class Projectile implements DisplayableSprite, MovableSprite, CollidingSp
 
 			DisplayableSprite sprite = universe.getSprites().get(i);
 
-			if (sprite instanceof SkeletonSprite) {
+			if (sprite instanceof Enemy) {
 				if (CollisionDetection.pixelBasedOverlaps(this, sprite)) {
-					((SkeletonSprite) sprite).removeHealth(damage);
+					((Enemy) sprite).removeHealth(damage);
 					colliding = true;
 					
 					

@@ -8,14 +8,15 @@ import javax.imageio.ImageIO;
 
 public class SkeletonSprite extends Enemy {
 
-	private final double VELOCITY = 200;
+	private static final double VELOCITY = 200;
+	
 	private final int WIDTH = 50;
 	private final int HEIGHT = 50;
 
 	private static Image image;
 	
 	public SkeletonSprite(double centerX, double centerY, int health) {
-		super(centerX, centerY, health, 200);
+		super(centerX, centerY, health, VELOCITY, "res/skeleton.png");
 		
 
 		if (image == null) {
