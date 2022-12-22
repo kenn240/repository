@@ -57,7 +57,7 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 	int universeLevel = 0;
 	private TowerType towerType;
 	private enum TowerType {
-		CANNON(0), TREBUCHET(1), ARCHER(2), NONE(3);
+		CANNON(0), TREBUCHET(1), ARCHER(2), BATTLESHIP(3), NONE(4);
 		private int value = 0;
 
 		private TowerType(int value) {
@@ -263,6 +263,9 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 		if (keyboard.keyDownOnce(66)) { // b key
 			towerType = TowerType.ARCHER;
 		}
+		if (keyboard.keyDownOnce(83)) { // b key
+			towerType = TowerType.BATTLESHIP;
+		}
 		if (keyboard.keyDownOnce(32)) { // space key
 			towerType = TowerType.NONE;
 		}
@@ -279,6 +282,9 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 			
 			case ARCHER:
 				this.lblBottom.setText("archer selected costs 2000");
+				break;
+			case BATTLESHIP:
+				this.lblBottom.setText("battleship selected costs 1000");
 				break;
 		
 			case NONE: 
@@ -330,6 +336,7 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 			scale /= 1.01;
 		}
 
+		/*
 		if (keyboard.keyDown(65)) {
 			screenCenterX += 1;
 		}
@@ -342,6 +349,7 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 		if (keyboard.keyDown(87)) {
 			screenCenterY += 1;
 		}
+		*/
 		
 		
 	}

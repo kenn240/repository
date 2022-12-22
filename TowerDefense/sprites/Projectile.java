@@ -10,8 +10,8 @@ public class Projectile implements DisplayableSprite, MovableSprite, CollidingSp
 	
 	private double centerX = 0;
 	private double centerY = 0;
-	private double width = 10;
-	private double height = 10;
+	private double width = 20;
+	private double height = 20;
 	private boolean dispose = false;
 	private static long score = 0;
 	private boolean isAtExit = false;
@@ -106,11 +106,11 @@ public class Projectile implements DisplayableSprite, MovableSprite, CollidingSp
 		// calculate new position based on velocity and time elapsed
 		//double deltaX = actual_delta_time * 0.001 * velocityX;
 
-		this.centerX += dX * 0.5;
+		this.centerX += dX * 0.1;
 
 		//double deltaY = actual_delta_time * 0.001 * velocityY;
 
-		this.centerY += dY * 0.5;
+		this.centerY += dY * 0.1;
 
 		checkCollisionWithBarrier(universe);
 	}

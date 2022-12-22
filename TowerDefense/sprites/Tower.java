@@ -30,7 +30,7 @@ public class Tower implements DisplayableSprite {
 			this.reloadTime = reloadTime;
 			this.range = range;
 			this.projectileName = projectileName;
-			this.projectileImage = projectileImage;
+			
 			this.damage = damage;
 			
 			try {
@@ -134,7 +134,7 @@ public class Tower implements DisplayableSprite {
 			return false;
 			
 		}
-		private boolean checkProximity(DisplayableSprite sprite) {
+		public boolean checkProximity(DisplayableSprite sprite) {
 			
 				if ((sprite instanceof Enemy) &&
 				
@@ -205,6 +205,37 @@ public class Tower implements DisplayableSprite {
 
 				}
 			}
+
+			return (int) (currentAngle);
+		}
+		public int findTheta(DisplayableSprite sprite) {
+			double x = 0;
+			double y = 0;
+			
+
+				if (sprite instanceof Enemy && checkProximity(sprite)) {
+					x = sprite.getCenterX() - this.centerX;
+					y = sprite.getCenterY() - this.centerY;
+
+					currentAngle = ((Math.toDegrees(Math.atan(y / x))));
+					// find angle by taking arctangent of difference in y
+					// divided by difference in x (tan^-1(opposite / adjacent))
+					// and then converting it to degrees
+					if (Math.abs(currentAngle) > 360) {
+						currentAngle = currentAngle % 360;
+					}
+					// if its over 360 degrees, take the remainder
+					if (x > 0) {
+						currentAngle += 180;
+					}
+					// if the sprite is behind the cannon add 180 to the degree
+					if (currentAngle < 0) {
+						currentAngle += 360;
+					}
+					// if its a negative degree add 360 tp it
+
+				}
+			
 
 			return (int) (currentAngle);
 		}

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.*;
@@ -30,7 +31,7 @@ public class SkeletonDefenseUniverse implements Universe {
 	
 	private TowerType towerType;
 	private enum TowerType {
-		CANNON(0), TREBUCHET(1), ARCHER(2);
+		CANNON(0), TREBUCHET(1), ARCHER(2), BATTLESHIP(3);
 		private int value = 0;
 
 		private TowerType(int value) {
@@ -41,17 +42,17 @@ public class SkeletonDefenseUniverse implements Universe {
 	public int map[][] = new int[][] {
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
 		{5, 6, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 7}, 
-		{5, 5, 5, 3, 1, 3, 3, 3, 3, 2, 2, 1, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2}, 
-		{5, 5, 5, 3, 1, 1, 1, 1, 3, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2}, 
-		{5, 8, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 1, 2, 1, 1, 1, 2, 2, 2, 2, 2},
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2},
-		{5, 5, 5, 3, 3, 1, 1, 1, 2, 2, 2, 2, 2, 1, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2},
-		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 3},
-		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 2, 3},
-		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
+		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 7}, 
+		{5, 5, 5, 3, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2}, 
+		{5, 5, 5, 3, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2}, 
+		{5, 8, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
+		{5, 5, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
+		{5, 5, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 1, 1, 1, 2, 1, 1, 1, 2, 2, 2, 2, 2},
+		{5, 5, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2},
+		{5, 5, 5, 3, 3, 1, 1, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2},
+		{5, 5, 5, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 3},
+		{5, 5, 5, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3},
+		{5, 5, 5, 3, 3, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 		{5, 5, 5, 3, 3, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
@@ -172,6 +173,9 @@ public class SkeletonDefenseUniverse implements Universe {
 		if (keyboard.keyDown(66)) { // b key
 			towerType = TowerType.ARCHER;
 		}
+		if (keyboard.keyDown(83)) { // s key
+			towerType = TowerType.BATTLESHIP;
+		}
 
 		if (health <= 0) {
 			complete = true;
@@ -245,6 +249,13 @@ public class SkeletonDefenseUniverse implements Universe {
 				map[(int) yPos][(int) xPos] = 4;
 			
 			}
+			
+		}
+		if (towerType == TowerType.BATTLESHIP && map[(int) yPos][(int) xPos] == 3) {
+			sprites.add(new Battleship(MouseInput.screenX, MouseInput.screenY));
+			addScore(-1000);
+			map[(int) yPos][(int) xPos] = 4;
+		
 		}
 	}
 
