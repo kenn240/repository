@@ -282,14 +282,14 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 				break;
 		
 			case NONE: 
-				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, A)");
+				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, B)");
 				break;
 			
 				
 			}
 		}
 			else {
-				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, A)");
+				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, B)");
 			}
 		
 	}
@@ -331,15 +331,15 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 		}
 
 		if (keyboard.keyDown(65)) {
-			screenCenterX -= 1;
+			screenCenterX += 1;
 		}
 		if (keyboard.keyDown(68)) {
-			screenCenterX += 1;
+			screenCenterX -= 1;
 		}
 		if (keyboard.keyDown(83)) {
 			screenCenterY -= 1;
 		}
-		if (keyboard.keyDown(88)) {
+		if (keyboard.keyDown(87)) {
 			screenCenterY += 1;
 		}
 		
