@@ -16,7 +16,7 @@ public class Trebuchet extends Tower{
 	private int range = 100;
 
 	public Trebuchet(double centerX, double centerY) {
-		super(centerX, centerY, 6, 200, 10, "res/trebuchet.png", "res/bullet.png");
+		super(centerX, centerY, 15, 400, 5, "res/trebuchet.png", "res/bullet.png", 100, 100);
 		// TODO Auto-generated constructor stub
 		
 		try {

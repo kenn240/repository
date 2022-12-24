@@ -21,17 +21,20 @@ public class Tower implements DisplayableSprite {
 	private String projectileName;
 	private Image projectileImage;
 	private int damage;
-	private DisplayableSprite targettedSprite;
+	private Enemy targettedSprite;
+	
+	
 
-		public Tower(double centerX, double centerY, double reloadTime, double range, int damage, String imageName, String projectileName) {
+		public Tower(double centerX, double centerY, double reloadTime, double range, int damage, String imageName, String projectileName, double height, double width) {
 			super();
 			this.centerX = centerX;
 			this.centerY = centerY;
 			this.reloadTime = reloadTime;
 			this.range = range;
 			this.projectileName = projectileName;
-			
 			this.damage = damage;
+			this.width = width;
+			this.height = height;
 			
 			try {
 				image = ImageIO.read(new File(imageName));
@@ -115,14 +118,17 @@ public class Tower implements DisplayableSprite {
 			timeSinceLastShot += actual_delta_time * 0.01;
 
 			if (this.checkProximity(universe) == true && timeSinceLastShot >= reloadTime) {
+				               
 				shoot(universe);
-				this.image = getImage(findTheta(universe));
 				
+				this.image = getImage(findTheta(universe));
 				timeSinceLastShot = 0;
-			}
+			
 			
 
 		}
+			}
+		
 		
 		private boolean checkProximity(Universe universe) {
 			for (DisplayableSprite sprite : universe.getSprites()) {
@@ -149,24 +155,11 @@ public class Tower implements DisplayableSprite {
 			
 		}
 		
-		public void shoot(DisplayableSprite TargettedSprite) {
-			
-		}
-		
-		
-
-		public void shoot(Universe universe) {
+		public void shoot(Enemy targettedSprite, Universe universe) {
 			double x = 0;
 			double y = 0;
-
-			for (DisplayableSprite sprite : universe.getSprites()) {
-				if ((sprite instanceof Enemy) && checkProximity(sprite)) {
-						x = sprite.getCenterX() - this.centerX;
-						y = sprite.getCenterY() - this.centerY;
-
-				} 
-				
-			}
+			x = this.targettedSprite.getCenterX() - this.centerX;
+			y = this.targettedSprite.getCenterY() - this.centerY;
 			if (x != 0 && y != 0) {
 				Projectile bullet = new Projectile(centerX, centerY, x, y, projectileName, damage);
 				// create a new cannon ball given the x direction that it should
@@ -177,14 +170,41 @@ public class Tower implements DisplayableSprite {
 			}
 		}
 		
+		
+
+		public void shoot(Universe universe) {
+			
+
+			for (DisplayableSprite sprite : universe.getSprites()) {
+				if ((sprite instanceof Enemy) && checkProximity(sprite)) {
+						
+							
+							targettedSprite = (Enemy) sprite;
+							
+							shoot(targettedSprite, universe);
+							break;
+						}
+				} 
+				
+			}
+			
+			
+		
+		
 		public int findTheta(Universe universe) {
 			double x = 0;
 			double y = 0;
-			for (DisplayableSprite sprite : universe.getSprites()) {
-
-				if (sprite instanceof Enemy && checkProximity(sprite)) {
-					x = sprite.getCenterX() - this.centerX;
-					y = sprite.getCenterY() - this.centerY;
+			
+			
+				for (DisplayableSprite sprite : universe.getSprites()) {
+					if ((sprite instanceof Enemy) && checkProximity(sprite)) {
+						x = sprite.getCenterX() - this.centerX;
+						y = sprite.getCenterY() - this.centerY;
+					
+			
+			
+					
+				
 
 					currentAngle = ((Math.toDegrees(Math.atan(y / x))));
 					// find angle by taking arctangent of difference in y
@@ -202,43 +222,20 @@ public class Tower implements DisplayableSprite {
 						currentAngle += 360;
 					}
 					// if its a negative degree add 360 tp it
-
+					
+					break;
+					}
+					}
+				if (currentAngle <= 360) {
+					return (int) (currentAngle);
 				}
-			}
-
-			return (int) (currentAngle);
-		}
-		public int findTheta(DisplayableSprite sprite) {
-			double x = 0;
-			double y = 0;
-			
-
-				if (sprite instanceof Enemy && checkProximity(sprite)) {
-					x = sprite.getCenterX() - this.centerX;
-					y = sprite.getCenterY() - this.centerY;
-
-					currentAngle = ((Math.toDegrees(Math.atan(y / x))));
-					// find angle by taking arctangent of difference in y
-					// divided by difference in x (tan^-1(opposite / adjacent))
-					// and then converting it to degrees
-					if (Math.abs(currentAngle) > 360) {
-						currentAngle = currentAngle % 360;
-					}
-					// if its over 360 degrees, take the remainder
-					if (x > 0) {
-						currentAngle += 180;
-					}
-					// if the sprite is behind the cannon add 180 to the degree
-					if (currentAngle < 0) {
-						currentAngle += 360;
-					}
-					// if its a negative degree add 360 tp it
-
+				else {
+					return 0;
 				}
-			
-
-			return (int) (currentAngle);
+					
+				
 		}
+		
 	
 		public double getReloadTime() {
 			return reloadTime;

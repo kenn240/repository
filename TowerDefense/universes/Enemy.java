@@ -23,6 +23,7 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 	private double height = 50;
 	private boolean dispose = false;
 	private int enemyHealth;
+	private int initialHealth;
 	public int map[][] = new int[][] {
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
 		{5, 6, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
@@ -63,6 +64,7 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 		this.centerX = centerX;
 		this.centerY = centerY;
 		this.enemyHealth = health;
+		this.initialHealth = health;
 		this.width = WIDTH;
 		this.height = HEIGHT;
 		this.imageName = imageName;
@@ -85,7 +87,9 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 		return image;
 
 	}
-
+	public int getEnemyHealth() {
+		return enemyHealth;
+	}
 	// DISPLAYABLE
 
 	public boolean getVisible() {
@@ -140,14 +144,10 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 			
 			if (enemyHealth <= 0) {
 				this.dispose = true;
-				if (this instanceof WizardSprite) {
-					SkeletonDefenseUniverse.addScore(1000);
-					SkeletonDefenseUniverse.skeletonKilled();
-				}
-				if (this instanceof SkeletonSprite) {
-					SkeletonDefenseUniverse.addScore(100);
-					SkeletonDefenseUniverse.skeletonKilled();
-				}
+				SkeletonDefenseUniverse.addScore(initialHealth);
+				SkeletonDefenseUniverse.skeletonKilled();
+				
+			
 			}
 		
 	
@@ -158,7 +158,7 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 		int yPos = (int) Math.round(this.centerY / CastleBackground.TILE_HEIGHT);
 		if (map[yPos][xPos] == 7) {
 			this.dispose = true;
-			SkeletonDefenseUniverse.addHealth(enemyHealth);
+			SkeletonDefenseUniverse.addHealth(-enemyHealth);
 		}
 		
 		Coordonite corner = (findCorner(xPos, yPos, direction));

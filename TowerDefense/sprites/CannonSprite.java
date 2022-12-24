@@ -13,7 +13,7 @@ public class CannonSprite extends Tower {
 	
 	public CannonSprite(double centerX, double centerY) {
 
-		super(centerX, centerY, 3, 100, 1, "res/cannonImage.png", "res/bullet.png");
+		super(centerX, centerY, 3, 100, 1, "res/cannonImage.png", "res/bullet.png", 50, 50);
 		
 		try {
 			image = ImageIO.read(new File("res/cannonImage.png"));

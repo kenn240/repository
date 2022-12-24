@@ -21,6 +21,8 @@ public class CastleBackground implements Background {
 	private Image woodBorder;
 	private Image cannonBorder;
 	private Image trebuchetBorder;
+	private Image cBorder;
+	private Image tBorder;
 	private int maxCols = 0;
 	private int maxRows = 0; 
 	private double shiftX = 0;
@@ -28,11 +30,11 @@ public class CastleBackground implements Background {
 	
 	public int map[][] = new int[][] {
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{5, 6, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+		{9, 6, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
 		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 7}, 
 		{5, 5, 5, 3, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2}, 
 		{5, 5, 5, 3, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2}, 
-		{5, 8, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
+		{10, 8, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
 		{5, 5, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
 		{5, 5, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 1, 1, 1, 2, 1, 1, 1, 2, 2, 2, 2, 2},
 		{5, 5, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2},
@@ -53,6 +55,8 @@ public class CastleBackground implements Background {
 			this.woodBorder = ImageIO.read(new File("res/border.png"));
 			this.cannonBorder = ImageIO.read(new File("res/cannonBorder.png"));
 			this.trebuchetBorder = ImageIO.read(new File("res/trebuchetBorder.png"));
+			this.cBorder = ImageIO.read(new File("res/cBorder.png"));
+			this.tBorder = ImageIO.read(new File("res/tBorder.png"));
 		}
 		catch (IOException e) {
     		System.out.println(e.toString());
@@ -87,6 +91,12 @@ public class CastleBackground implements Background {
 		}
 		else if (map[row][col] == 8) {
 			image = trebuchetBorder;
+		}
+		else if (map[row][col] == 9) {
+			image = cBorder;
+		}
+		else if (map[row][col] == 10) {
+			image = tBorder;
 		}
 		
 		int x = (col * TILE_WIDTH);

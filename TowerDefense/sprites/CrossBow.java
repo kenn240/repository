@@ -15,7 +15,7 @@ public class CrossBow extends Tower {
 	
 
 	public CrossBow(double centerX, double centerY) {
-		super(centerX, centerY, .5, 250, 1,  "res/crossbow.png", "res/bullet.png"); // each increment of 50 is 1 tile
+		super(centerX, centerY, .5, 250, 1,  "res/crossbow.png", "res/bullet.png", 50, 50); // each increment of 50 is 1 tile
 		
 
 		try {

@@ -274,17 +274,17 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 			switch(towerType) {
 			case CANNON:
 				
-				this.lblBottom.setText("Cannon selected costs 700");
+				this.lblBottom.setText("Cannon selected costs 200");
 				break;
 			case TREBUCHET:
-				this.lblBottom.setText("Trebuchet selected costs 2000");
+				this.lblBottom.setText("Trebuchet selected costs 1000");
 				break;
 			
 			case ARCHER:
-				this.lblBottom.setText("archer selected costs 2000");
+				this.lblBottom.setText("crossbow selected costs 7000");
 				break;
 			case BATTLESHIP:
-				this.lblBottom.setText("battleship selected costs 1000");
+				this.lblBottom.setText("battleship selected costs 2000");
 				break;
 		
 			case NONE: 

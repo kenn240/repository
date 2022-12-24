@@ -23,7 +23,8 @@ public class SkeletonDefenseUniverse implements Universe {
 	private double elapsedTime;
 	private final double SRATE = 1;
 	private final double WRATE = 2.5;
-	private static long score = 1000;
+	private final double FRATE = 3.5;
+	private static long score = 500;
 	private static long health = 100;
 	private static long skeletonsKilled = 0;
 	private static int wave = 1;
@@ -31,7 +32,7 @@ public class SkeletonDefenseUniverse implements Universe {
 	
 	private TowerType towerType;
 	private enum TowerType {
-		CANNON(0), TREBUCHET(1), ARCHER(2), BATTLESHIP(3);
+		CANNON(0), TREBUCHET(1), ARCHER(2), BATTLESHIP(3), NONE(4);
 		private int value = 0;
 
 		private TowerType(int value) {
@@ -62,25 +63,9 @@ public class SkeletonDefenseUniverse implements Universe {
 
 	private double timeSinceLastSkeletonSpawn;
 	private double timeSinceLastWizardSpawn;
-
+	private double timeSinceLastFrogSpawn;
 	
-	/*
-	 {5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{5, 6, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{5, 5, 5, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 7}, 
-		{5, 5, 5, 3, 1, 3, 3, 3, 3, 2, 2, 1, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2}, 
-		{5, 5, 5, 3, 1, 1, 1, 1, 3, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2}, 
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2},
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2},
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 1, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1, 2},
-		{5, 5, 5, 3, 3, 3, 3, 1, 3, 2, 2, 2, 1, 1, 2, 1, 2, 2, 1, 2, 2, 2, 1, 2},
-		{5, 5, 5, 3, 3, 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, 2, 2, 2, 1, 2},
-		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, 2, 2, 2, 1, 3},
-		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3},
-		{5, 5, 5, 3, 3, 1, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
-		{5, 5, 5, 3, 3, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
-		
-	 */
+	
 	
 	
 	
@@ -160,6 +145,7 @@ public class SkeletonDefenseUniverse implements Universe {
 		elapsedTime += (actual_delta_time * 0.001);
 		timeSinceLastSkeletonSpawn += (actual_delta_time * 0.001);
 		timeSinceLastWizardSpawn += (actual_delta_time * 0.001);
+		timeSinceLastFrogSpawn += (actual_delta_time * 0.001);
 		
 		double velocityX = 0;
 		double velocityY = 0;
@@ -167,33 +153,38 @@ public class SkeletonDefenseUniverse implements Universe {
 		if (keyboard.keyDownOnce(67)) { // c key
 			towerType = TowerType.CANNON;
 		}
-		if (keyboard.keyDown(84)) { // t key
+		if (keyboard.keyDownOnce(84)) { // t key
 			towerType = TowerType.TREBUCHET;
 		}
-		if (keyboard.keyDown(66)) { // b key
+		if (keyboard.keyDownOnce(66)) { // b key
 			towerType = TowerType.ARCHER;
 		}
-		if (keyboard.keyDown(83)) { // s key
+		if (keyboard.keyDownOnce(83)) { // s key
 			towerType = TowerType.BATTLESHIP;
 		}
+		
 
 		if (health <= 0) {
 			complete = true;
 		}
 
-		if (skeletonsKilled >= 2 * wave && skeletonsKilled % 2 != 0) {
+		if (skeletonsKilled >= 5 * wave && skeletonsKilled % 5 != 0) {
 			nextWave();
-			addScore(500);
+			addScore(250);
 		}
-		System.out.println(timeSinceLastSkeletonSpawn);
+		
 		
 		if (timeSinceLastSkeletonSpawn >= SRATE) {
-			spawnSkeletons(timeSinceLastSkeletonSpawn, 0);
+			spawnSkeletons(timeSinceLastSkeletonSpawn, 0, 0);
 			timeSinceLastSkeletonSpawn = 0;
 		}
 		if (timeSinceLastWizardSpawn >= WRATE) {
-			spawnSkeletons(0, timeSinceLastWizardSpawn);
+			spawnSkeletons(0, timeSinceLastWizardSpawn, 0);
 			timeSinceLastWizardSpawn = 0;
+		}
+		if (timeSinceLastFrogSpawn >= FRATE) {
+			spawnSkeletons(0, 0, timeSinceLastFrogSpawn);
+			timeSinceLastFrogSpawn = 0;
 		}
 		
 
@@ -204,12 +195,13 @@ public class SkeletonDefenseUniverse implements Universe {
 		}
 		double xPos = MouseInput.screenX / CastleBackground.TILE_WIDTH;;
 		double yPos = MouseInput.screenY / CastleBackground.TILE_HEIGHT; // find position on array;
-		if (keyboard.keyDown(32)) {
+		if (keyboard.keyDownOnce(32)) {
 			placeTower(xPos, yPos, towerType);
+			towerType = TowerType.NONE;
 		}
 		
 	}
-	public void spawnSkeletons(double timeSinceLastSkeletonSpawn, double timeSinceLastWizardSpawn) {
+	public void spawnSkeletons(double timeSinceLastSkeletonSpawn, double timeSinceLastWizardSpawn, double timeSinceLastFrogSpawn) {
 		if (timeSinceLastSkeletonSpawn >= SRATE) {
 			Enemy e1 = (new SkeletonSprite(530, 750, wave));
 			sprites.add(e1);
@@ -217,9 +209,14 @@ public class SkeletonDefenseUniverse implements Universe {
 			
 		}
 		if (wave >= 10 && timeSinceLastWizardSpawn >= WRATE) {
-			Enemy e2 = (new WizardSprite(530, 750, 3 * wave));
+			Enemy e2 = (new WizardSprite(530, 750, 5 * wave));
 			sprites.add(e2);
 			timeSinceLastWizardSpawn = 0;
+		}
+		if (wave >= 50 && timeSinceLastFrogSpawn >= FRATE) {
+			Enemy e3 = (new Frog(530, 750, 20 * wave));
+			sprites.add(e3);
+			timeSinceLastFrogSpawn = 0;
 		}
 		
 			
@@ -230,30 +227,30 @@ public class SkeletonDefenseUniverse implements Universe {
 	public void placeTower(double xPos, double yPos, TowerType towerType) {
 		if  (map[(int) yPos][(int) xPos] == 2) {
 		
-			if (towerType == TowerType.CANNON) {
+			if (towerType == TowerType.CANNON && score >= 200) {
 			
 				sprites.add(new CannonSprite(MouseInput.screenX, MouseInput.screenY));
-				addScore(-700);
+				addScore(-200);
 				map[(int) yPos][(int) xPos] = 4;
 			
 			}
-			if (towerType == TowerType.TREBUCHET) {
+			if (towerType == TowerType.TREBUCHET && score >= 1000) {
 				sprites.add(new Trebuchet(MouseInput.screenX, MouseInput.screenY));
-				addScore(-2000);
+				addScore(-1000);
 				map[(int) yPos][(int) xPos] = 4;
 			
 			}
-			if (towerType == TowerType.ARCHER) {
+			if (towerType == TowerType.ARCHER && score >= 7000) {
 				sprites.add(new CrossBow(MouseInput.screenX, MouseInput.screenY));
-				addScore(-1500);
+				addScore(-7000);
 				map[(int) yPos][(int) xPos] = 4;
 			
 			}
 			
 		}
-		if (towerType == TowerType.BATTLESHIP && map[(int) yPos][(int) xPos] == 3) {
+		if (towerType == TowerType.BATTLESHIP && map[(int) yPos][(int) xPos] == 3 && score >= 2000) {
 			sprites.add(new Battleship(MouseInput.screenX, MouseInput.screenY));
-			addScore(-1000);
+			addScore(-2000);
 			map[(int) yPos][(int) xPos] = 4;
 		
 		}
