@@ -263,7 +263,7 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 		if (keyboard.keyDownOnce(66)) { // b key
 			towerType = TowerType.ARCHER;
 		}
-		if (keyboard.keyDownOnce(83)) { // b key
+		if (keyboard.keyDownOnce(83)) { // s key
 			towerType = TowerType.BATTLESHIP;
 		}
 		if (keyboard.keyDownOnce(32)) { // space key
@@ -281,21 +281,21 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 				break;
 			
 			case ARCHER:
-				this.lblBottom.setText("crossbow selected costs 7000");
+				this.lblBottom.setText("Crossbow selected costs 7000");
 				break;
 			case BATTLESHIP:
-				this.lblBottom.setText("battleship selected costs 2000");
+				this.lblBottom.setText("Battleship selected costs 2000");
 				break;
 		
 			case NONE: 
-				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, B)");
+				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, B, S)");
 				break;
 			
 				
 			}
 		}
 			else {
-				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, B)");
+				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, B, S)");
 			}
 		
 	}
