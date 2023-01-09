@@ -146,7 +146,7 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 				this.dispose = true;
 				SkeletonDefenseUniverse.addScore(initialHealth);
 				SkeletonDefenseUniverse.skeletonKilled();
-				
+				SkeletonDefenseUniverse.enemyKilledThisWave();
 			
 			}
 		

@@ -269,6 +269,11 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 		if (keyboard.keyDownOnce(32)) { // space key
 			towerType = TowerType.NONE;
 		}
+		if (SkeletonDefenseUniverse.getWaveOver()) {
+			isPaused = true;
+			
+		}
+		
 		
 		if (towerType != null) {
 			switch(towerType) {
@@ -293,7 +298,11 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 			
 				
 			}
+			if (isPaused == true && SkeletonDefenseUniverse.getWaveOver()) {
+				this.lblBottom.setText("Wave over! unpause to advance!");
+			}
 		}
+		
 			else {
 				this.lblBottom.setText("Use keys to select a tower and press space to place (C, T, B)");
 			}
@@ -314,6 +323,7 @@ public class SkeletonDefenseAnimationFrame extends JFrame {
 	protected void btnPauseRun_mouseClicked(MouseEvent arg0) {
 		if (isPaused) {
 			isPaused = false;
+			SkeletonDefenseUniverse.setWaveOver(false);
 			this.btnPauseRun.setText("||");
 		} else {
 			isPaused = true;

@@ -24,10 +24,15 @@ public class SkeletonDefenseUniverse implements Universe {
 	private final double SRATE = 1;
 	private final double WRATE = 2.5;
 	private final double FRATE = 3.5;
+	private int skeletonsSpawnedThisWave;
+	private int wizardsSpawnedThisWave;
+	private int frogsSpawnedThisWave;
+	private static int enemiesKilledThisWave;
 	private static long score = 500;
 	private static long health = 100;
 	private static long skeletonsKilled = 0;
 	private static int wave = 1;
+	private static boolean waveOver = false;
 	
 	
 	private TowerType towerType;
@@ -168,23 +173,31 @@ public class SkeletonDefenseUniverse implements Universe {
 			complete = true;
 		}
 
-		if (skeletonsKilled >= 5 * wave && skeletonsKilled % 5 != 0) {
+		if (enemiesKilledThisWave == wave && skeletonsKilled != 0) {
+			waveOver = true;
 			nextWave();
 			addScore(250);
+			skeletonsSpawnedThisWave = 0;
+			wizardsSpawnedThisWave = 0;
+			frogsSpawnedThisWave = 0;
+			enemiesKilledThisWave = 0;
 		}
 		
 		
-		if (timeSinceLastSkeletonSpawn >= SRATE) {
+		if (timeSinceLastSkeletonSpawn >= SRATE && waveOver == false && skeletonsSpawnedThisWave < wave) {
 			spawnSkeletons(timeSinceLastSkeletonSpawn, 0, 0);
 			timeSinceLastSkeletonSpawn = 0;
+			skeletonsSpawnedThisWave++;
 		}
-		if (timeSinceLastWizardSpawn >= WRATE) {
+		if (timeSinceLastWizardSpawn >= WRATE && wizardsSpawnedThisWave < (wave/2)) {
 			spawnSkeletons(0, timeSinceLastWizardSpawn, 0);
 			timeSinceLastWizardSpawn = 0;
+			wizardsSpawnedThisWave++;
 		}
-		if (timeSinceLastFrogSpawn >= FRATE) {
+		if (timeSinceLastFrogSpawn >= FRATE && frogsSpawnedThisWave < (wave / 5)) {
 			spawnSkeletons(0, 0, timeSinceLastFrogSpawn);
 			timeSinceLastFrogSpawn = 0;
+			frogsSpawnedThisWave++;
 		}
 		
 
@@ -308,6 +321,9 @@ public class SkeletonDefenseUniverse implements Universe {
 	public static void skeletonKilled() {
 		skeletonsKilled++;
 	}
+	public static void enemyKilledThisWave() {
+		enemiesKilledThisWave++;
+	}
 
 	public static int getWave() {
 		return wave;
@@ -315,6 +331,12 @@ public class SkeletonDefenseUniverse implements Universe {
 
 	public static void nextWave() {
 		wave++;
+	}
+	public static boolean getWaveOver() {
+		return waveOver;
+	}
+	public static void setWaveOver(boolean waveOver) {
+		SkeletonDefenseUniverse.waveOver = waveOver;
 	}
 
 }
