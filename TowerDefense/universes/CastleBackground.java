@@ -23,6 +23,10 @@ public class CastleBackground implements Background {
 	private Image trebuchetBorder;
 	private Image cBorder;
 	private Image tBorder;
+	private Image crossBowBorder;
+	private Image battleShipBorder;
+	
+	
 	private int maxCols = 0;
 	private int maxRows = 0; 
 	private double shiftX = 0;
@@ -38,11 +42,11 @@ public class CastleBackground implements Background {
 		{5, 5, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2},
 		{5, 5, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 1, 1, 1, 2, 1, 1, 1, 2, 2, 2, 2, 2},
 		{5, 5, 5, 3, 3, 3, 3, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2},
-		{5, 5, 5, 3, 3, 1, 1, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2},
+		{5, 11, 5, 3, 3, 1, 1, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2}, //add crossbow to this line
 		{5, 5, 5, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 3},
 		{5, 5, 5, 3, 3, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3},
 		{5, 5, 5, 3, 3, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
-		{5, 5, 5, 3, 3, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
+		{5, 12, 5, 3, 3, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3}, // add battleship to this line
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 		{5, 5, 5, 3, 3, 3, 3, 3, 3, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3},
 	};
@@ -57,6 +61,8 @@ public class CastleBackground implements Background {
 			this.trebuchetBorder = ImageIO.read(new File("res/trebuchetBorder.png"));
 			this.cBorder = ImageIO.read(new File("res/cBorder.png"));
 			this.tBorder = ImageIO.read(new File("res/tBorder.png"));
+			this.crossBowBorder = ImageIO.read(new File("res/crossBowBorder.png"));
+			this.battleShipBorder = ImageIO.read(new File("res/battleshipBorder.png"));
 		}
 		catch (IOException e) {
     		System.out.println(e.toString());
@@ -97,6 +103,14 @@ public class CastleBackground implements Background {
 		}
 		else if (map[row][col] == 10) {
 			image = tBorder;
+		}
+		
+		else if (map[row][col] == 11) {
+			image = crossBowBorder;
+		}
+		
+		else if (map[row][col] == 12) {
+			image = battleShipBorder;
 		}
 		
 		int x = (col * TILE_WIDTH);
