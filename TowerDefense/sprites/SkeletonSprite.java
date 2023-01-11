@@ -16,7 +16,7 @@ public class SkeletonSprite extends Enemy {
 	private static Image image;
 	
 	public SkeletonSprite(double centerX, double centerY, int health) {
-		super(centerX, centerY, health, VELOCITY, "res/skeleton.png");
+		super(centerX, centerY, health, VELOCITY, "res/skeleton.png", 10);
 		
 
 		if (image == null) {

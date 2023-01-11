@@ -9,7 +9,7 @@ public class Frog extends Enemy{
 	private static Image image;
 	
 	public Frog(double centerX, double centerY, int health) {
-		super(centerX, centerY, health, 50, "res/frogPirate.png");
+		super(centerX, centerY, health, 50, "res/frogPirate.png", 5000);
 		if (image == null) {
 			try {
 

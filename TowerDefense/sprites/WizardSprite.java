@@ -9,7 +9,7 @@ public class WizardSprite extends Enemy{
 	private static Image image;
 
 	public WizardSprite(double centerX, double centerY, int health) {
-		super(centerX, centerY, health, 100, "res/wizard.png");
+		super(centerX, centerY, health, 100, "res/wizard.png", 1000);
 		if (image == null) {
 			try {
 

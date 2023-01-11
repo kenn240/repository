@@ -21,13 +21,16 @@ public class SkeletonDefenseUniverse implements Universe {
 	private double yCenter = 350;
 	private int level = 10;
 	private double elapsedTime;
-	private final double SRATE = 1;
+	private final double SRATE = 0.5;
 	private final double WRATE = 2.5;
 	private final double FRATE = 3.5;
 	private int skeletonsSpawnedThisWave;
 	private int wizardsSpawnedThisWave;
 	private int frogsSpawnedThisWave;
-	private static int enemiesKilledThisWave;
+	
+	private static int skeletonsKilledThisWave;
+	private static int wizardsKilledThisWave;
+	private static int frogsKilledThisWave;
 	private static long score = 500;
 	private static long health = 100;
 	private static long skeletonsKilled = 0;
@@ -172,16 +175,45 @@ public class SkeletonDefenseUniverse implements Universe {
 		if (health <= 0) {
 			complete = true;
 		}
-
-		if (enemiesKilledThisWave == wave && skeletonsKilled != 0) {
+		
+		if (skeletonsKilled > 0) {
+		if (skeletonsKilledThisWave >= wave && wave <= 10 ) {
 			waveOver = true;
 			nextWave();
 			addScore(250);
 			skeletonsSpawnedThisWave = 0;
+			skeletonsKilledThisWave = 0;
+		}
+		else if (wizardsKilledThisWave >= wave/2 && wave <= 50) {
+			waveOver = true;
+			nextWave();
+			addScore(250);
+			wizardsSpawnedThisWave = 0;
+			wizardsKilledThisWave = 0;
+			skeletonsSpawnedThisWave = 0;
+			skeletonsKilledThisWave = 0;
+		}
+		else if (frogsKilledThisWave >= wave/5 && wave > 50){
+			waveOver = true;
+			nextWave();
+			addScore(250);
+			frogsSpawnedThisWave = 0;
+			frogsKilledThisWave = 0;
+			wizardsSpawnedThisWave = 0;
+			wizardsKilledThisWave = 0;
+			skeletonsSpawnedThisWave = 0;
+			skeletonsKilledThisWave = 0;
+			}
+		}
+			/*
+			skeletonsSpawnedThisWave = 0;
 			wizardsSpawnedThisWave = 0;
 			frogsSpawnedThisWave = 0;
-			enemiesKilledThisWave = 0;
-		}
+			skeletonsKilledThisWave = 0;
+			wizardsKilledThisWave = 0;
+			frogsKilledThisWave = 0;
+			*/
+		
 		
 		
 		if (timeSinceLastSkeletonSpawn >= SRATE && waveOver == false && skeletonsSpawnedThisWave < wave) {
@@ -194,7 +226,7 @@ public class SkeletonDefenseUniverse implements Universe {
 			timeSinceLastWizardSpawn = 0;
 			wizardsSpawnedThisWave++;
 		}
-		if (timeSinceLastFrogSpawn >= FRATE && frogsSpawnedThisWave < (wave / 5)) {
+		if (timeSinceLastFrogSpawn >= FRATE && frogsSpawnedThisWave <= (wave / 5)) {
 			spawnSkeletons(0, 0, timeSinceLastFrogSpawn);
 			timeSinceLastFrogSpawn = 0;
 			frogsSpawnedThisWave++;
@@ -321,8 +353,18 @@ public class SkeletonDefenseUniverse implements Universe {
 	public static void skeletonKilled() {
 		skeletonsKilled++;
 	}
-	public static void enemyKilledThisWave() {
-		enemiesKilledThisWave++;
+	public static void enemyKilledThisWave(Enemy enemy) {
+		if (enemy instanceof SkeletonSprite) {
+			skeletonsKilledThisWave++;
+		}
+		if (enemy instanceof WizardSprite) {
+			wizardsKilledThisWave++;
+		}
+		if (enemy instanceof Frog) {
+			frogsKilledThisWave++;
+		}
+		
+		
 	}
 
 	public static int getWave() {

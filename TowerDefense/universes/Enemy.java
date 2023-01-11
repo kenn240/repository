@@ -59,7 +59,7 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 		}
 	};
 
-	public Enemy(double centerX, double centerY, int health, double velocity, String imageName) {
+	public Enemy(double centerX, double centerY, int health, double velocity, String imageName, int pointsGiven) {
 
 		this.centerX = centerX;
 		this.centerY = centerY;
@@ -146,8 +146,8 @@ public class Enemy implements DisplayableSprite, CollidingSprite {
 				this.dispose = true;
 				SkeletonDefenseUniverse.addScore(initialHealth);
 				SkeletonDefenseUniverse.skeletonKilled();
-				SkeletonDefenseUniverse.enemyKilledThisWave();
-			
+				SkeletonDefenseUniverse.enemyKilledThisWave(this);
+				
 			}
 		
 	
